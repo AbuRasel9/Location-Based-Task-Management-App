@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:location_based_task_management_app/config/routes/routes_name.dart';
 import 'package:location_based_task_management_app/view/home/widget/task_item_widget.dart';
 import 'package:location_based_task_management_app/view_model/task_provider/task_view_model.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,7 @@ class _HomeViewState extends State<HomeView> {
       taskProvider.setLoadin(false);
       setState(() {});
     } catch (e) {
+      log("-------error ${e}");
       taskProvider.setLoadin(false);
       setState(() {});
     }
@@ -38,7 +42,12 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final taskProvider = Provider.of<TaskViewModel>(context);
     return Scaffold(
-      appBar: AppBar(title: Text("Today Task")),
+      appBar: AppBar(title: Text("Today Task"),actions: [
+        IconButton(onPressed: () {
+          Navigator.pushNamed(context, RoutesName.createTask);
+
+        }, icon: Icon(Icons.add))
+      ],),
       body: taskProvider.loading
           ? Center(child: CircularProgressIndicator())
           : taskProvider.task.isEmpty

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location_based_task_management_app/config/routes/routes_name.dart';
+import 'package:location_based_task_management_app/view/crateTaskScreen/create_task_screen.dart';
 import 'package:location_based_task_management_app/view/home/home_view.dart';
 
 class Routes {
@@ -8,6 +9,8 @@ class Routes {
     switch (settings.name) {
       case RoutesName.home:
         return MaterialPageRoute(builder: (context) => HomeView(),);
+      case RoutesName.createTask:
+        return MaterialPageRoute(builder: (context) => CreateTaskScreen(),);
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

@@ -23,7 +23,7 @@ class AppThemeData {
     textTheme: AppTextThemes.lightTextTheme,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColorSchemes.lightColorScheme.onPrimary,
+      backgroundColor: AppColorSchemes.lightColorScheme.primary,
       foregroundColor: AppColorSchemes.lightColorScheme.onPrimary,
       elevation: 0,
       titleTextStyle: AppTextThemes.lightTextTheme.titleLarge
