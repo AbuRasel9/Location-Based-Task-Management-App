@@ -7,6 +7,9 @@ import 'package:location_based_task_management_app/repository/task_repo/task_rep
 import 'package:location_based_task_management_app/view_model/task_provider/task_view_model.dart';
 import 'package:provider/provider.dart';
 
+import 'config/routes/routes_manager.dart';
+import 'config/routes/routes_name.dart';
+import 'config/theme/app_theme_data.dart';
 import 'data/network/firestore_service.dart';
 import 'data/network/hive_service.dart';
 import 'model/task_model.dart';
@@ -37,7 +40,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => TaskViewModel(taskRepository))],
-      child: MaterialApp(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.light, // Setting theme mode to dark
+        theme: AppThemeData.lightThemeData, // Setting light theme
+        darkTheme: AppThemeData.darkThemeData, // Setting dark theme      title: 'task',
+
+        initialRoute: RoutesName.home, // Initial route
+        onGenerateRoute: Routes.generateRoute, // Generating routes
+      ),
     );
   }
 }

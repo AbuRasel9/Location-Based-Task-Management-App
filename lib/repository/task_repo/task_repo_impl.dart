@@ -1,9 +1,12 @@
-import 'package:location_based_task_management_app/config/services/check_online_services.dart';
-import 'package:location_based_task_management_app/model/task_model.dart';
+
 import 'package:location_based_task_management_app/repository/task_repo/task_repo.dart';
+
+import '../../config/services/check_online_services.dart';
+import '../../model/task_model.dart';
 
 class TaskRepoImpl extends TaskRepository {
   TaskRepoImpl(super.service, super.hive);
+
 
   @override
   Future<List<TaskModel>> getTasks() async {

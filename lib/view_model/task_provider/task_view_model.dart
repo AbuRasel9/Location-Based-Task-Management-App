@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:location_based_task_management_app/config/services/dependency_checker.dart';
 import 'package:location_based_task_management_app/config/services/location_service.dart';
-import 'package:location_based_task_management_app/repository/task_repo/task_repo.dart';
 
 import '../../model/task_model.dart';
+import '../../repository/task_repo/task_repo.dart';
 
 class TaskViewModel with ChangeNotifier {
   final TaskRepository repo;
