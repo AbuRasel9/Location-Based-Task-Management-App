@@ -7,7 +7,6 @@
 - **View Assigned Tasks:** See all tasks for the day with title, deadline, and status.
 - **Create New Task:** Add tasks manually with title, due time, and map location.
 - **Task Details:** View detailed task info with a map preview of the location.
-- **Check-In at Location:** Automatically verify agent's presence using GPS within 100 meters.
 - **Complete Tasks:** Mark tasks as complete only when near the location and parent task (if any) is completed.
 - **Task Dependency:** Prevents completing child tasks until parent tasks are done.
 - **Offline Support:** View cached tasks offline; syncs automatically when back online.
