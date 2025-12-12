@@ -1,57 +1,35 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../model/task_model.dart';
 
 class FirebaseService {
   final tasks = FirebaseFirestore.instance.collection("tasks");
 
-  /// FETCH TASKS
-  Future<Map<String, dynamic>> fetchTasks() async {
+  Future<List<TaskModel>> fetchTasks() async {
     try {
       final snap = await tasks.get();
-      final list = snap.docs.map((e) {
-        final data = e.data();
-        data["id"] = e.id;
-        return TaskModel.fromMap(data);
-      }).toList();
-
-      return {"status": 200, "data": list};
-    } on FirebaseException catch (e) {
-      return {"status": 400, "error": firebaseErrorMessage(e)};
-    } catch (e, stack) {
-      log("Fetch error: $e\n$stack");
-      return {"status": 500, "error": e.toString()};
+      return snap.docs.map((e) => TaskModel.fromMap(e.data())).toList();
+    } catch (e) {
+      throw Exception(firebaseErrorMessage(e));
     }
   }
 
-  /// CREATE TASK
-  Future<Map<String, dynamic>> createTask(TaskModel task) async {
+  Future<void> createTask(TaskModel task) async {
     try {
       await tasks.doc(task.id).set(task.toMap());
-      return {"status": 200, "message": "Task created successfully"};
-    } on FirebaseException catch (e) {
-      return {"status": 400, "error": firebaseErrorMessage(e)};
-    } catch (e, stack) {
-      log("Create error: $e\n$stack");
-      return {"status": 500, "error": e.toString()};
+    } catch (e) {
+      throw Exception(firebaseErrorMessage(e));
     }
   }
 
-  /// UPDATE TASK
-  Future<Map<String, dynamic>> updateTask(TaskModel task) async {
+  Future<void> updateTask(TaskModel task) async {
     try {
       await tasks.doc(task.id).update(task.toMap());
-      return {"status": 200, "message": "Task updated successfully"};
-    } on FirebaseException catch (e) {
-      return {"status": 400, "error": firebaseErrorMessage(e)};
-    } catch (e, stack) {
-      log("Update error: $e\n$stack");
-      return {"status": 500, "error": e.toString()};
+    } catch (e) {
+      throw Exception(firebaseErrorMessage(e));
     }
   }
 
-  /// ERROR MESSAGES
-  String firebaseErrorMessage(FirebaseException e) {
+  String firebaseErrorMessage(e) {
     switch (e.code) {
       case "permission-denied":
         return "You do not have permission to access this data.";
