@@ -11,7 +11,7 @@ import '../../config/services/location_service.dart';
 class TaskDetailsScreen extends StatefulWidget {
   final TaskModel task;
 
-  TaskDetailsScreen({required this.task});
+  const TaskDetailsScreen({required this.task});
 
   @override
   State<TaskDetailsScreen> createState() => _TaskDetailsScreenState();
