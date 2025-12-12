@@ -66,112 +66,108 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       appBar: AppBar(title: Text("Create Task")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      validator: (value) {
-                        if (value?.isEmpty ?? false) {
-                          return "Enter Title";
-                        }
-                        return null;
-                      },
-                      controller: titleCtrl,
-                      decoration: InputDecoration(
-                        labelText: "Task Title",
-                        prefixIcon: Icon(Icons.title),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-
-                    OutlinedButton.icon(
-                      icon: Icon(Icons.calendar_today),
-                      label: Text(
-                        selectedDateTime == null
-                            ? "Pick Due Date & Time"
-                            : "${selectedDateTime!.day}/${selectedDateTime!.month}/${selectedDateTime!.year} ${selectedDateTime!.hour}:${selectedDateTime!.minute.toString().padLeft(2, '0')}",
-                      ),
-                      onPressed: _pickDateTime,
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    OutlinedButton.icon(
-                      icon: Icon(Icons.location_on),
-                      label: Text(
-                        lat != null && lon != null
-                            ? "Location: $lat, $lon"
-                            : "Pick Location",
-                      ),
-                      onPressed: _pickLocation,
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    loading
-                        ? Center(
-                            child: CircularProgressIndicator(
-                            ),
-                          )
-                        : ElevatedButton.icon(
-                            icon: Icon(Icons.save),
-                            label: Text("Save Task"),
-                            onPressed: () async {
-                              if (titleCtrl.text.isEmpty ||
-                                  lat == null ||
-                                  lon == null ||
-                                  selectedDateTime == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Please fill all fields and pick date & location",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-
-                              try {
-                                loading = true;
-                                setState(() {});
-                                final task = TaskModel(
-                                  id: Uuid().v4(),
-                                  title: titleCtrl.text,
-                                  dueTime: selectedDateTime!,
-                                  latitude: lat!,
-                                  longitude: lon!,
-                                );
-
-                                await taskProvider.createTask(task);
-                                loading = false;
-                                setState(() {});
-                              } catch (e) {
-                                log("-------$e");
-                                loading = false;
-                                setState(() {});
-                              }
-
-                              Navigator.pop(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(double.infinity, 50),
-                            ),
-                          ),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              TextFormField(
+                validator: (value) {
+                  if (value?.isEmpty ?? false) {
+                    return "Enter Title";
+                  }
+                  return null;
+                },
+                controller: titleCtrl,
+                decoration: InputDecoration(
+                  labelText: "Task Title",
+                  prefixIcon: Icon(Icons.title),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 16),
+
+              OutlinedButton.icon(
+                icon: Icon(Icons.calendar_today),
+                label: Text(
+                  selectedDateTime == null
+                      ? "Pick Due Date & Time"
+                      : "${selectedDateTime!.day}/${selectedDateTime!.month}/${selectedDateTime!.year} ${selectedDateTime!.hour}:${selectedDateTime!.minute.toString().padLeft(2, '0')}",
+                ),
+                onPressed: _pickDateTime,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                ),
+              ),
+              SizedBox(height: 16),
+              OutlinedButton.icon(
+                icon: Icon(Icons.location_on),
+                label: Text(
+                  lat != null && lon != null
+                      ? "Location: $lat, $lon"
+                      : "Pick Location",
+                ),
+                onPressed: _pickLocation,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                ),
+              ),
+              SizedBox(height: 16),
+              loading
+                  ? Center(
+                child: CircularProgressIndicator(
+                ),
+              )
+                  : ElevatedButton.icon(
+                icon: Icon(Icons.save),
+                label: Text("Save Task"),
+                onPressed: () async {
+                  if (titleCtrl.text.isEmpty ||
+                      lat == null ||
+                      lon == null ||
+                      selectedDateTime == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Please fill all fields and pick date & location",
+                        ),
+                      ),
+                    );
+                    return;
+                  }
+
+                  try {
+                    loading = true;
+                    setState(() {});
+                    final task = TaskModel(
+                      id: Uuid().v4(),
+                      title: titleCtrl.text,
+                      dueTime: selectedDateTime!,
+                      latitude: lat!,
+                      longitude: lon!,
+                    );
+
+                    await taskProvider.createTask(task);
+                    loading = false;
+                    setState(() {});
+                  } catch (e) {
+                    print("----------${e.toString()}");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          e.toString(),
+                        ),
+                      ),
+                    );                                loading = false;
+                    setState(() {});
+                  }
+
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
