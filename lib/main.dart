@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:location_based_task_management_app/view_model/task/task_view_model.dart';
+import 'package:location_based_task_management_app/view_model/task_provider/task_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
