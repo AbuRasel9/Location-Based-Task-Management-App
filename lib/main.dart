@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:location_based_task_management_app/view_model/home/home_view_model.dart';
+import 'package:location_based_task_management_app/view_model/task/task_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => HomeViewModel())],
+      providers: [ChangeNotifierProvider(create: (context) => TaskViewModel())],
       child: MaterialApp(),
     );
   }

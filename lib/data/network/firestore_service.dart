@@ -5,7 +5,7 @@ class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Stream of tasks assigned to an agent for today
-  Stream<List<TaskModel>> streamTasksForAgentToday(String agentId) {
+  Stream<List<TaskModel>> tasksForAgentToday(String agentId) {
     final now = DateTime.now();
     final startOfDay = DateTime(now.year, now.month, now.day);
     final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
@@ -20,7 +20,7 @@ class FirestoreService {
         .map((snap) => snap.docs.map((d) => TaskModel.fromDocument(d)).toList());
   }
 
-  // Optional: fetch single task, or other operations
+  // Optional: fetch single task_provider, or other operations
   Future<TaskModel?> getTaskById(String id) async {
     final doc = await _db.collection('tasks').doc(id).get();
     if (!doc.exists) return null;
