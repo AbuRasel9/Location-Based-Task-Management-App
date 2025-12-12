@@ -1,43 +1,59 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
 
+part 'task_model.g.dart';
+
+@HiveType(typeId: 0)
 class TaskModel {
+  @HiveField(0)
+  String id;
 
-  final String id;
-  final String title;
-  final String? description;
-  final DateTime? dueTime;
-  final String status;
-  final double? lat;
-  final double? lng;
-  final String? parentTaskId;
-  final String? assignedTo;
+  @HiveField(1)
+  String title;
+
+  @HiveField(2)
+  DateTime dueTime;
+
+  @HiveField(3)
+  double latitude;
+
+  @HiveField(4)
+  double longitude;
+
+  @HiveField(5)
+  bool completed;
+
+  @HiveField(6)
+  String? parentTaskId;
 
   TaskModel({
     required this.id,
     required this.title,
-    this.description,
-    this.dueTime,
-    required this.status,
-    this.lat,
-    this.lng,
+    required this.dueTime,
+    required this.latitude,
+    required this.longitude,
+    this.completed = false,
     this.parentTaskId,
-    this.assignedTo,
   });
 
-  factory TaskModel.fromDocument(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>? ?? {};
-    final location = data['location'] as Map<String, dynamic>?;
-    Timestamp? dueTs = data['dueTime'] as Timestamp?;
+  factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      id: doc.id,
-      title: data['title'] ?? '',
-      description: data['description'],
-      dueTime: dueTs?.toDate(),
-      status: data['status'] ?? 'pending',
-      lat: location != null ? (location['lat']?.toDouble()) : null,
-      lng: location != null ? (location['lng']?.toDouble()) : null,
-      parentTaskId: data['parentTaskId'],
-      assignedTo: data['assignedTo'],
+      id: map['id'],
+      title: map['title'],
+      dueTime: DateTime.parse(map['dueTime']),
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      completed: map['completed'],
+      parentTaskId: map['parentTaskId'],
     );
   }
+
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'title': title,
+    'dueTime': dueTime.toIso8601String(),
+    'latitude': latitude,
+    'longitude': longitude,
+    'completed': completed,
+    'parentTaskId': parentTaskId,
+  };
 }
