@@ -19,15 +19,16 @@ Future<void> main() async {
 
   // Initialize Firebase
   await Firebase.initializeApp();
-
+   const boxName = "tasksBox";
   // Initialize Hive
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
-  await Hive.openBox<TaskModel>("tasksBox");
+  await Hive.openBox<TaskModel>(boxName);
 
   // Initialize services and repository
   final firebaseService = FirebaseService();
   final hiveService = HiveService();
+
   final taskRepository = TaskRepoImpl(firebaseService, hiveService);
   runApp(MyApp(taskRepository: taskRepository,));
 }
