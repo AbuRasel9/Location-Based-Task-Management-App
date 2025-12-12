@@ -1,11 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:location_based_task_management_app/repository/task_repo/task_repo.dart';
 import 'package:location_based_task_management_app/repository/task_repo/task_repo_impl.dart';
 import 'package:location_based_task_management_app/view_model/task_provider/task_view_model.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp(,));
+import 'data/network/firestore_service.dart';
+import 'data/network/hive_service.dart';
+import 'model/task_model.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskModelAdapter());
+  await Hive.openBox<TaskModel>("tasksBox");
+
+  // Initialize services and repository
+  final firebaseService = FirebaseService();
+  final hiveService = HiveService();
+  final taskRepository = TaskRepoImpl(firebaseService, hiveService);
+  runApp(MyApp(taskRepository: taskRepository,));
 }
 
 class MyApp extends StatelessWidget {
