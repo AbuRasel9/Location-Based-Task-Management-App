@@ -33,6 +33,14 @@ class TaskViewModel with ChangeNotifier {
     _task = await repo.getTasks();
     notifyListeners();
   }
+
+  //create task
+  Future<void> createTask(TaskModel task) async {
+    await repo.saveTask(task);
+    await getTask();
+  }
+
+
 //check in for complete task
   Future<String?> checkIn(TaskModel task) async {
     final position = await LocationService.getCurrentLocation();

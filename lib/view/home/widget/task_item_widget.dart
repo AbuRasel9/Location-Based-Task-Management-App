@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location_based_task_management_app/utils/extensions/context_ext.dart';
 
 import '../../../model/task_model.dart';
+import '../../taskDetails/task_details_screen.dart';
 
 class TaskItemWidget extends StatelessWidget {
   final TaskModel task;
@@ -17,6 +18,11 @@ class TaskItemWidget extends StatelessWidget {
       trailing: Icon(task.completed?Icons.check_circle:Icons.pending,
         color: task.completed?theme.colorScheme.tertiary:theme.colorScheme.error
       ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => TaskDetailsScreen(task: task)),
+      ),
+
     );
   }
 }
