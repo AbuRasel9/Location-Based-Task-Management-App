@@ -25,7 +25,7 @@ class AppColorSchemes {
     surface: Colors.white,
     onSurface: Colors.black,
     outline: AppColors.hintColor,
-    tertiary: AppColors.tertiaryColor,
+    tertiary: AppColors.successColor,
     onTertiary: Colors.white,
   );
 
@@ -43,7 +43,7 @@ class AppColorSchemes {
     surface: Colors.black,
     onSurface: Colors.white,
     outline: AppColors.hintColor,
-    tertiary: AppColors.tertiaryColor,
+    tertiary: AppColors.successColor,
     onTertiary: Colors.white,
   );
 }

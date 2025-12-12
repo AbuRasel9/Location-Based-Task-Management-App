@@ -22,6 +22,11 @@ class TaskViewModel with ChangeNotifier {
   bool get loading => _loading;
   //method
 
+  void setLoadin(bool loading){
+    _loading=loading;
+    notifyListeners();
+  }
+
   //get all task
 
   Future<void> getTask() async {
