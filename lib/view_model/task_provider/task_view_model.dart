@@ -6,6 +6,12 @@ import 'package:location_based_task_management_app/repository/task_repo/task_rep
 import '../../model/task_model.dart';
 
 class TaskViewModel with ChangeNotifier{
+  final TaskRepository repo;
+  TaskViewModel(this.repo);
+  List<TaskModel>task=[];
+  bool loading=false;
+
+
 
 
 
